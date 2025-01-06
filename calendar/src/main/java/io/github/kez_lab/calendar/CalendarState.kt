@@ -13,19 +13,19 @@ import kotlinx.datetime.DateTimeUnit
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.plus
 
-private const val PAGE_COUNT = 1200
-
 @OptIn(ExperimentalFoundationApi::class)
 @Stable
 class CalendarState(
     val pagerState: PagerState,
-    private val initialDate: LocalDate
+    initialDate: LocalDate
 ) {
     val currentDate: LocalDate
         get() = initialDate.plus(pagerState.currentPage - PAGE_COUNT / 2, DateTimeUnit.MONTH)
 
+    var initialDate by mutableStateOf(initialDate)
     var selectedDate by mutableStateOf<LocalDate?>(null)
 }
+
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
