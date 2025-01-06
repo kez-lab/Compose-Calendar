@@ -22,6 +22,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import kotlinx.datetime.DateTimeUnit
@@ -31,6 +32,14 @@ import kotlinx.datetime.plus
 import java.time.format.TextStyle
 import java.util.Locale
 
+/**
+ * 📅 Jetpack Compose Calendar Component
+ *
+ * @param modifier The [Modifier] to be applied to the calendar
+ * @param calendarState The state object that manages the calendar
+ * @param headerContent A composable slot for customizing the calendar header
+ * @param dayContent A composable slot for customizing day cells
+ */
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun Calendar(
@@ -54,7 +63,6 @@ fun Calendar(
 
             Column(modifier = Modifier.fillMaxWidth()) {
                 headerContent(displayedDate)
-
                 MonthCalendar(
                     year = displayedDate.year,
                     month = displayedDate.monthNumber,
@@ -67,7 +75,15 @@ fun Calendar(
     }
 }
 
-
+/**
+ * 📆 Displays a monthly calendar for the given year and month
+ *
+ * @param year The year to display
+ * @param month The month to display
+ * @param selectedDate The currently selected date
+ * @param onDateSelected Callback triggered when a date is selected
+ * @param dayContent A composable slot for customizing day cells
+ */
 @Composable
 fun MonthCalendar(
     year: Int,
@@ -109,33 +125,13 @@ fun MonthCalendar(
     }
 }
 
-class CalendarScope(
-    val selectedDate: LocalDate?,
-    val onDateSelected: (LocalDate) -> Unit
-)
-
-@Composable
-fun DefaultCalendarHeader(date: LocalDate) {
-    Text(
-        text = "${date.year}년 ${date.monthNumber}월",
-        modifier = Modifier.fillMaxWidth(),
-        style = MaterialTheme.typography.headlineSmall,
-        textAlign = TextAlign.Center
-    )
-}
-
-@Composable
-fun DefaultCalendarDay(
-    date: LocalDate,
-    calendarState: CalendarState
-) {
-    DayCell(
-        dayNumber = date.dayOfMonth,
-        isSelected = date == calendarState.selectedDate,
-        onClick = { calendarState.selectedDate = date }
-    )
-}
-
+/**
+ * 🔹 Represents a single day cell in the calendar
+ *
+ * @param dayNumber The day number (1-31)
+ * @param isSelected Whether the day is currently selected
+ * @param onClick Callback triggered when the cell is clicked
+ */
 @Composable
 fun DayCell(
     dayNumber: Int,
@@ -153,6 +149,28 @@ fun DayCell(
     ) {
         Text(text = dayNumber.toString(), color = if (isSelected) Color.White else Color.Black)
     }
+}
+
+@Composable
+internal fun DefaultCalendarHeader(date: LocalDate) {
+    Text(
+        text = "📆 ${date.month.getDisplayName(TextStyle.FULL, Locale.getDefault())} ${date.year}",
+        modifier = Modifier.fillMaxWidth(),
+        style = MaterialTheme.typography.headlineSmall,
+        fontWeight = FontWeight.Bold,
+    )
+}
+
+@Composable
+internal fun DefaultCalendarDay(
+    date: LocalDate,
+    calendarState: CalendarState
+) {
+    DayCell(
+        dayNumber = date.dayOfMonth,
+        isSelected = date == calendarState.selectedDate,
+        onClick = { calendarState.selectedDate = date }
+    )
 }
 
 @Preview

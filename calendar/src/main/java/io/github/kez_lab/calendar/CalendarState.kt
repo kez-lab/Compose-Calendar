@@ -38,3 +38,9 @@ fun rememberCalendarState(
     )
     return remember { CalendarState(pagerState, initialDate) }
 }
+
+
+class CalendarScope(
+    val selectedDate: LocalDate?,
+    val onDateSelected: (LocalDate) -> Unit
+)
