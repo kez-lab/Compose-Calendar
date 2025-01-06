@@ -1,20 +1,15 @@
-@file:OptIn(ExperimentalFoundationApi::class)
-
 package io.github.kez_lab.calendar
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import io.github.kez_lab.calendar.ui.Calendar
-import io.github.kez_lab.calendar.ui.rememberCalendarState
 import io.github.kez_lab.calendar.ui.theme.CalendarTheme
 
 class MainActivity : ComponentActivity() {

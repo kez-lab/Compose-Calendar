@@ -1,4 +1,4 @@
-package io.github.kez_lab.calendar.util
+package io.github.kez_lab.calendar
 
 import kotlinx.datetime.Clock
 import kotlinx.datetime.DateTimeUnit

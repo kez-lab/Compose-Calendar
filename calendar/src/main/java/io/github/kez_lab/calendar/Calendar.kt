@@ -1,4 +1,4 @@
-package io.github.kez_lab.calendar.ui
+package io.github.kez_lab.calendar
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
@@ -13,58 +13,24 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.pager.HorizontalPager
-import androidx.compose.foundation.pager.PagerState
-import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ShapeDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.Stable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import io.github.kez_lab.calendar.util.CalendarUtils
-import io.github.kez_lab.calendar.util.currentDate
-import kotlinx.datetime.DateTimeUnit
 import kotlinx.datetime.DayOfWeek
 import kotlinx.datetime.LocalDate
-import kotlinx.datetime.plus
+import java.time.format.TextStyle
 import java.util.Locale
 
-private const val PAGE_COUNT = 1200
 private val CELL_SIZE = 30.dp
 private val GRID_HEIGHT = 260.dp
-
-@OptIn(ExperimentalFoundationApi::class)
-@Stable
-class CalendarState(
-    val pagerState: PagerState,
-    private val initialDate: LocalDate
-) {
-    val currentDate: LocalDate
-        get() = initialDate.plus(pagerState.currentPage - PAGE_COUNT / 2, DateTimeUnit.MONTH)
-
-    var selectedDate by mutableStateOf<LocalDate?>(null)
-}
-
-@OptIn(ExperimentalFoundationApi::class)
-@Composable
-fun rememberCalendarState(
-    initialDate: LocalDate = remember { currentDate }
-): CalendarState {
-    val pagerState = rememberPagerState(
-        initialPage = PAGE_COUNT / 2,
-        pageCount = { PAGE_COUNT }
-    )
-    return remember { CalendarState(pagerState, initialDate) }
-}
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -123,7 +89,7 @@ fun MonthCalendar(
             DayCell(
                 dayLabel = remember(dayOfWeek) {
                     dayOfWeek.getDisplayName(
-                        java.time.format.TextStyle.SHORT,
+                        TextStyle.SHORT,
                         Locale.getDefault()
                     )
                 }
