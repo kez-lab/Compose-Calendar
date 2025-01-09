@@ -11,7 +11,6 @@ import kotlinx.datetime.until
 
 internal val currentDate = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()).date
 
-internal val CELL_SIZE = 30.dp
 internal val GRID_HEIGHT = 260.dp
 internal val PAGE_COUNT = 1200
 
